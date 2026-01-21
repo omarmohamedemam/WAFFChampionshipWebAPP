@@ -39,6 +39,8 @@ export function LeaderboardRow({ rank, label, subLabel, flag, score, isHeader }:
         );
     }
 
+    const isCountryRow = !subLabel;
+
     return (
         <motion.div
             layout
@@ -46,22 +48,44 @@ export function LeaderboardRow({ rank, label, subLabel, flag, score, isHeader }:
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 500, damping: 40 }}
-            className={twMerge(baseClass, rowClass, getRankStyle(rank))}
-            style={
-                !subLabel && flag
-                    ? {
-                        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('data:image/svg+xml,${encodeURIComponent(
-                            `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="50%" y="50%" font-size="80" text-anchor="middle" dominant-baseline="middle">${flag}</text></svg>`
-                        )}')`,
-                        backgroundSize: "cover, 150%",
-                        backgroundPosition: "center, center",
-                        backgroundRepeat: "no-repeat",
-                    }
-                    : undefined
-            }
+            className={twMerge(baseClass, rowClass, getRankStyle(rank), "relative overflow-hidden")}
         >
-            <div className={rankClass}>{rank}</div>
-            <div className="flex items-center gap-3 overflow-hidden">
+            {/* Animated Background Layer - Only for country rows */}
+            {isCountryRow && flag && (
+                <motion.div
+                    className="absolute inset-0 z-0"
+                    initial={{ scale: 1 }}
+                    animate={{
+                        scale: [1, 1.15, 1],
+                        x: [0, -10, 0],
+                    }}
+                    transition={{
+                        duration: 15,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        repeatType: "reverse"
+                    }}
+                    style={{
+                        backgroundImage: `url('data:image/svg+xml,${encodeURIComponent(
+                            `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><text x="50%" y="50%" font-size="160" text-anchor="middle" dominant-baseline="middle">${flag}</text></svg>`
+                        )}')`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                        opacity: 0.3,
+                    }}
+                />
+            )}
+
+            {/* Static Gradient Overlay - for text contrast */}
+            {isCountryRow && flag && (
+                <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/80 via-black/60 to-black/40 pointer-events-none" />
+            )}
+
+            {/* Content Layer - Above backgrounds */}
+            <div className={twMerge(rankClass, "relative z-10")}>{rank}</div>
+
+            <div className="flex items-center gap-3 overflow-hidden relative z-10">
                 {flag && (
                     <span className="text-xl md:text-2xl shrink-0" role="img" aria-label="flag">
                         {flag.startsWith('http') ? (
@@ -73,15 +97,16 @@ export function LeaderboardRow({ rank, label, subLabel, flag, score, isHeader }:
                     </span>
                 )}
                 <div className="flex flex-col min-w-0">
-                    <span className="truncate leading-tight">{label}</span>
+                    <span className="truncate leading-tight drop-shadow-lg">{label}</span>
                     {subLabel && <span className="text-xs text-white/50 truncate font-medium">{subLabel}</span>}
                 </div>
             </div>
+
             <motion.div
                 key={score}
                 initial={{ scale: 1.5, color: "#fff" }}
                 animate={{ scale: 1, color: "#d8b4fe" }}
-                className={scoreClass}
+                className={twMerge(scoreClass, "relative z-10 drop-shadow-lg")}
             >
                 {score}
             </motion.div>
