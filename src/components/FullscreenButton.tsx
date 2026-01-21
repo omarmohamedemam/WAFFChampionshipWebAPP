@@ -8,19 +8,55 @@ export function FullscreenButton() {
 
     useEffect(() => {
         const handleFullscreenChange = () => {
-            setIsFullscreen(!!document.fullscreenElement);
+            const isNowFullscreen = !!(
+                document.fullscreenElement ||
+                (document as any).webkitFullscreenElement ||
+                (document as any).mozFullScreenElement ||
+                (document as any).msFullscreenElement
+            );
+            setIsFullscreen(isNowFullscreen);
         };
 
         document.addEventListener("fullscreenchange", handleFullscreenChange);
-        return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+        document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+        document.addEventListener("mozfullscreenchange", handleFullscreenChange);
+        document.addEventListener("MSFullscreenChange", handleFullscreenChange);
+
+        return () => {
+            document.removeEventListener("fullscreenchange", handleFullscreenChange);
+            document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+            document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
+            document.removeEventListener("MSFullscreenChange", handleFullscreenChange);
+        };
     }, []);
 
     const toggleFullscreen = async () => {
         try {
-            if (!document.fullscreenElement) {
-                await document.documentElement.requestFullscreen();
+            const doc = document.documentElement as any;
+
+            if (!isFullscreen) {
+                // Enter fullscreen with browser compatibility
+                if (doc.requestFullscreen) {
+                    await doc.requestFullscreen();
+                } else if (doc.webkitRequestFullscreen) {
+                    await doc.webkitRequestFullscreen();
+                } else if (doc.mozRequestFullScreen) {
+                    await doc.mozRequestFullScreen();
+                } else if (doc.msRequestFullscreen) {
+                    await doc.msRequestFullscreen();
+                }
             } else {
-                await document.exitFullscreen();
+                // Exit fullscreen with browser compatibility
+                const docAny = document as any;
+                if (document.exitFullscreen) {
+                    await document.exitFullscreen();
+                } else if (docAny.webkitExitFullscreen) {
+                    await docAny.webkitExitFullscreen();
+                } else if (docAny.mozCancelFullScreen) {
+                    await docAny.mozCancelFullScreen();
+                } else if (docAny.msExitFullscreen) {
+                    await docAny.msExitFullscreen();
+                }
             }
         } catch (err) {
             console.error("Fullscreen error:", err);
