@@ -3,6 +3,7 @@
 import useSWR from 'swr';
 import { LeaderboardPanel } from '@/components/LeaderboardPanel';
 import { FullscreenButton } from '@/components/FullscreenButton';
+import { getCountryFlag } from '@/utils/countryFlags';
 
 const fetcher = async (url: string) => {
     try {
@@ -33,7 +34,7 @@ export default function LeaderboardPage() {
         id: c.country,
         rank: c.rank,
         label: c.country,
-        flag: c.flag,
+        flag: getCountryFlag(c.country) || c.flag, // Prefer asset flag, fallback to API flag (emoji)
         score: c.score
     })) || [];
 

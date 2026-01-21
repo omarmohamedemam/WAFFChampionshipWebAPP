@@ -50,30 +50,38 @@ export function LeaderboardRow({ rank, label, subLabel, flag, score, isHeader }:
             transition={{ type: "spring", stiffness: 500, damping: 40 }}
             className={twMerge(baseClass, rowClass, getRankStyle(rank), "relative overflow-hidden")}
         >
-            {/* Animated Background Layer - Using CSS text rendering instead of SVG */}
+            {/* Animated Background Layer */}
             {isCountryRow && flag && (
                 <motion.div
-                    className="absolute inset-0 z-0 flex items-center justify-center"
+                    className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
                     initial={{ scale: 1 }}
                     animate={{
-                        scale: [1, 1.3, 1],
-                        x: ["-10%", "10%", "-10%"],
-                        rotate: [0, 3, 0],
+                        scale: [1.1, 1.25, 1.1],
+                        x: ["-5%", "5%", "-5%"],
                     }}
                     transition={{
-                        duration: 20,
+                        duration: 15,
                         repeat: Infinity,
                         ease: "easeInOut",
                         repeatType: "reverse"
                     }}
                     style={{
-                        opacity: 0.4,
-                        filter: "blur(2px) brightness(1.2)",
-                        fontSize: "20rem",
-                        lineHeight: 0,
+                        opacity: 0.2,
+                        filter: "blur(2px) grayscale(30%)",
                     }}
                 >
-                    {flag}
+                    {(flag.startsWith('http') || flag.startsWith('/')) ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                            src={flag}
+                            alt=""
+                            className="w-full h-full object-cover opacity-60"
+                        />
+                    ) : (
+                        <div style={{ fontSize: "20rem", lineHeight: 0, filter: "brightness(1.2)" }}>
+                            {flag}
+                        </div>
+                    )}
                 </motion.div>
             )}
 
@@ -87,10 +95,10 @@ export function LeaderboardRow({ rank, label, subLabel, flag, score, isHeader }:
 
             <div className="flex items-center gap-3 overflow-hidden relative z-10">
                 {flag && (
-                    <span className="text-xl md:text-2xl shrink-0" role="img" aria-label="flag">
-                        {flag.startsWith('http') ? (
+                    <span className="text-xl md:text-2xl shrink-0 flex items-center justify-center w-8" role="img" aria-label="flag">
+                        {(flag.startsWith('http') || flag.startsWith('/')) ? (
                             // eslint-disable-next-line @next/next/no-img-element
-                            <img src={flag} alt="flag" className="w-6 h-4 object-cover rounded shadow-sm" />
+                            <img src={flag} alt="flag" className="w-8 h-auto object-contain rounded-sm shadow-sm" />
                         ) : (
                             flag
                         )}
