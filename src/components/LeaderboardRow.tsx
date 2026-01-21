@@ -15,11 +15,11 @@ type LeaderboardRowProps = {
 
 export function LeaderboardRow({ rank, label, subLabel, flag, score, isHeader }: LeaderboardRowProps) {
     // Styles
-    const baseClass = "grid grid-cols-[3rem_1fr_4rem] md:grid-cols-[4rem_1fr_6rem] items-center gap-2 px-4 py-2 rounded-lg";
-    const headerClass = "bg-white/10 text-white/60 font-medium text-xs md:text-sm uppercase tracking-wider mb-2 backdrop-blur-sm";
-    const rowClass = "bg-white/10 text-white font-bold text-sm md:text-lg border-l-4 border-transparent hover:bg-white/20 transition-colors backdrop-blur-md shadow-md";
+    const baseClass = "grid grid-cols-[4rem_1fr_5rem] md:grid-cols-[6rem_1fr_8rem] items-center gap-3 px-6 py-3 rounded-xl";
+    const headerClass = "bg-white/10 text-white/60 font-medium text-sm md:text-lg uppercase tracking-wider mb-3 backdrop-blur-sm";
+    const rowClass = "bg-white/10 text-white font-bold text-lg md:text-2xl border-l-4 border-transparent hover:bg-white/20 transition-colors backdrop-blur-md shadow-md";
     const rankClass = "text-center font-mono opacity-80";
-    const scoreClass = "text-center font-mono text-xl md:text-2xl text-purple-300";
+    const scoreClass = "text-center font-mono text-2xl md:text-4xl text-purple-300";
 
     // Rank 1/2/3 specific styling
     const getRankStyle = (r: number) => {

@@ -2,7 +2,7 @@
 
 import useSWR from 'swr';
 import { LeaderboardPanel } from '@/components/LeaderboardPanel';
-import { FullscreenButton } from '@/components/FullscreenButton';
+
 import { getCountryFlag } from '@/utils/countryFlags';
 import { AspectRatioScaler } from '@/components/AspectRatioScaler';
 
@@ -66,33 +66,37 @@ export default function LeaderboardPage() {
                         <img src="/assets/logo2.svg" alt="Logo" className="w-24 md:w-32" />
                         <img src="/assets/1x/logo3.png" alt="Logo" className="w-24 md:w-32" />
                     </div>
-                    <FullscreenButton />
+
                 </div>
                 <img src="/assets/logo4.svg" alt="PiMX" className="absolute bottom-6 left-6 w-28 md:w-36 z-50" />
 
                 {/* Content */}
-                <div className="relative z-50 h-full flex flex-col px-4 pt-12">
-                    <img src="/assets/tittle.png" alt="Title" className="w-full max-w-xl mx-auto mb-6" />
+                <div className="relative z-50 h-full flex flex-col px-4 pt-8">
+                    {/* Title always at top */}
+                    <img src="/assets/tittle.png" alt="Title" className="w-full max-w-2xl mx-auto mb-4 drop-shadow-2xl flex-none" />
 
-                    <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <LeaderboardPanel
-                            title="Top 5 Countries"
-                            items={countries}
-                            isLoading={isLoading}
-                        />
-                        <LeaderboardPanel
-                            title="Top 5 Players"
-                            items={players}
-                            isLoading={isLoading}
-                        />
+                    {/* Leaderboard Grid centered in remaining space */}
+                    <div className="flex-1 flex items-center justify-center pb-12">
+                        <div className="w-full max-w-[95%] grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <LeaderboardPanel
+                                title="Top 5 Countries"
+                                items={countries}
+                                isLoading={isLoading}
+                            />
+                            <LeaderboardPanel
+                                title="Top 5 Players"
+                                items={players}
+                                isLoading={isLoading}
+                            />
+                        </div>
                     </div>
+
+                    {error && (
+                        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-red-600 text-white px-6 py-4 rounded-xl text-sm font-bold z-[100]">
+                            <p>⚠️ {String(error.message || error)}</p>
+                        </div>
+                    )}
                 </div>
-
-                {error && (
-                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-red-600 text-white px-6 py-4 rounded-xl text-sm font-bold z-[100]">
-                        <p>⚠️ {String(error.message || error)}</p>
-                    </div>
-                )}
             </div>
         </AspectRatioScaler>
     );

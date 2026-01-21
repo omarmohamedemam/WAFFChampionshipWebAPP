@@ -21,8 +21,8 @@ type LeaderboardPanelProps = {
 
 export function LeaderboardPanel({ title, items, isLoading }: LeaderboardPanelProps) {
     return (
-        <div className="flex flex-col h-full w-full max-w-lg mx-auto bg-black/60 rounded-2xl p-4 border border-white/20 shadow-2xl backdrop-blur-md">
-            <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-widest text-center mb-6 drop-shadow-lg">
+        <div className="flex flex-col h-full w-full mx-auto bg-black/60 rounded-3xl p-6 border border-white/20 shadow-2xl backdrop-blur-md">
+            <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-widest text-center mb-8 drop-shadow-lg">
                 {title}
             </h2>
 
