@@ -50,38 +50,36 @@ export function LeaderboardRow({ rank, label, subLabel, flag, score, isHeader }:
             transition={{ type: "spring", stiffness: 500, damping: 40 }}
             className={twMerge(baseClass, rowClass, getRankStyle(rank), "relative overflow-hidden")}
         >
-            {/* Animated Background Layer - Only for country rows */}
+            {/* Animated Background Layer - Using CSS text rendering instead of SVG */}
             {isCountryRow && flag && (
                 <motion.div
-                    className="absolute inset-0 z-0"
+                    className="absolute inset-0 z-0 flex items-center justify-center"
                     initial={{ scale: 1 }}
                     animate={{
-                        scale: [1, 1.2, 1],
-                        x: [0, -15, 0],
-                        rotate: [0, 2, 0],
+                        scale: [1, 1.3, 1],
+                        x: ["-10%", "10%", "-10%"],
+                        rotate: [0, 3, 0],
                     }}
                     transition={{
-                        duration: 12,
+                        duration: 20,
                         repeat: Infinity,
                         ease: "easeInOut",
                         repeatType: "reverse"
                     }}
                     style={{
-                        backgroundImage: `url('data:image/svg+xml,${encodeURIComponent(
-                            `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><text x="50%" y="50%" font-size="240" text-anchor="middle" dominant-baseline="middle">${flag}</text></svg>`
-                        )}')`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
-                        opacity: 0.5,
-                        filter: "blur(1px)",
+                        opacity: 0.4,
+                        filter: "blur(2px) brightness(1.2)",
+                        fontSize: "20rem",
+                        lineHeight: 0,
                     }}
-                />
+                >
+                    {flag}
+                </motion.div>
             )}
 
             {/* Static Gradient Overlay - for text contrast */}
             {isCountryRow && flag && (
-                <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/70 via-black/40 to-black/60 pointer-events-none" />
+                <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/75 via-black/50 to-black/65 pointer-events-none" />
             )}
 
             {/* Content Layer - Above backgrounds */}
