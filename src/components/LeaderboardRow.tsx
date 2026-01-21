@@ -87,7 +87,7 @@ export function LeaderboardRow({ rank, label, subLabel, flag, score, isHeader }:
 
             {/* Static Gradient Overlay - for text contrast */}
             {isCountryRow && flag && (
-                <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/20 via-black/5 to-black/10 pointer-events-none" />
+                <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/[0.05] via-black/[0.02] to-black/[0.05] pointer-events-none" />
             )}
 
             {/* Content Layer - Above backgrounds */}
