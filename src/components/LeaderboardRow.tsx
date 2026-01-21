@@ -47,6 +47,18 @@ export function LeaderboardRow({ rank, label, subLabel, flag, score, isHeader }:
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 500, damping: 40 }}
             className={twMerge(baseClass, rowClass, getRankStyle(rank))}
+            style={
+                !subLabel && flag
+                    ? {
+                        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('data:image/svg+xml,${encodeURIComponent(
+                            `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="50%" y="50%" font-size="80" text-anchor="middle" dominant-baseline="middle">${flag}</text></svg>`
+                        )}')`,
+                        backgroundSize: "cover, 150%",
+                        backgroundPosition: "center, center",
+                        backgroundRepeat: "no-repeat",
+                    }
+                    : undefined
+            }
         >
             <div className={rankClass}>{rank}</div>
             <div className="flex items-center gap-3 overflow-hidden">

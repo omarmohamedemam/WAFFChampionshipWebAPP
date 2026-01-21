@@ -2,6 +2,7 @@
 
 import useSWR from 'swr';
 import { LeaderboardPanel } from '@/components/LeaderboardPanel';
+import { FullscreenButton } from '@/components/FullscreenButton';
 
 const fetcher = async (url: string) => {
     try {
@@ -57,9 +58,12 @@ export default function LeaderboardPage() {
 
             {/* Logos */}
             <img src="/assets/logo1.svg" alt="Logo" className="absolute top-6 left-6 w-40 md:w-52 z-50" />
-            <div className="absolute top-6 right-6 flex gap-6 z-50">
-                <img src="/assets/logo2.svg" alt="Logo" className="w-24 md:w-32" />
-                <img src="/assets/1x/logo3.png" alt="Logo" className="w-24 md:w-32" />
+            <div className="absolute top-6 right-6 flex flex-col items-end gap-4 z-50">
+                <div className="flex gap-6">
+                    <img src="/assets/logo2.svg" alt="Logo" className="w-24 md:w-32" />
+                    <img src="/assets/1x/logo3.png" alt="Logo" className="w-24 md:w-32" />
+                </div>
+                <FullscreenButton />
             </div>
             <img src="/assets/logo4.svg" alt="PiMX" className="absolute bottom-6 left-6 w-28 md:w-36 z-50" />
 
