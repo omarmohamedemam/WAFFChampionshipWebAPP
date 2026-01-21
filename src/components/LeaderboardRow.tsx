@@ -56,30 +56,32 @@ export function LeaderboardRow({ rank, label, subLabel, flag, score, isHeader }:
                     className="absolute inset-0 z-0"
                     initial={{ scale: 1 }}
                     animate={{
-                        scale: [1, 1.15, 1],
-                        x: [0, -10, 0],
+                        scale: [1, 1.2, 1],
+                        x: [0, -15, 0],
+                        rotate: [0, 2, 0],
                     }}
                     transition={{
-                        duration: 15,
+                        duration: 12,
                         repeat: Infinity,
                         ease: "easeInOut",
                         repeatType: "reverse"
                     }}
                     style={{
                         backgroundImage: `url('data:image/svg+xml,${encodeURIComponent(
-                            `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><text x="50%" y="50%" font-size="160" text-anchor="middle" dominant-baseline="middle">${flag}</text></svg>`
+                            `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><text x="50%" y="50%" font-size="240" text-anchor="middle" dominant-baseline="middle">${flag}</text></svg>`
                         )}')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
-                        opacity: 0.3,
+                        opacity: 0.5,
+                        filter: "blur(1px)",
                     }}
                 />
             )}
 
             {/* Static Gradient Overlay - for text contrast */}
             {isCountryRow && flag && (
-                <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/80 via-black/60 to-black/40 pointer-events-none" />
+                <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/70 via-black/40 to-black/60 pointer-events-none" />
             )}
 
             {/* Content Layer - Above backgrounds */}
