@@ -3,11 +3,5 @@
     "outputDirectory": ".next",
     "devCommand": "npm run dev",
     "installCommand": "npm install",
-    "framework": "nextjs",
-    "env": {
-        "NEXT_PUBLIC_APPS_SCRIPT_URL": {
-            "description": "Google Apps Script Web App URL (must end with /exec)",
-            "required": true
-        }
-    }
+    "framework": "nextjs"
 }
